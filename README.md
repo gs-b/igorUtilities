@@ -10,7 +10,7 @@ All procedures are contained in a WaveMetrics Igor Pro procedure (.ipf) files. T
     * In case you are using more than one Igor git repository, I recommend cloning them all into the same directory and automatically including them all in Igor via a shortcut to the parent directory placed in the Igor Procedures folder.
   
  # Procedure file summaries
- ### Igor Utilities (`igorUtilities.ipf`)
+ ### Igor utilities (`igorUtilities.ipf`)
  Useful functions. These functions are required for all of my Igor repositories. *This procedure file has no dependencies.*
 * Highlights of some of the functions:
 * list_operation_g(...): a function for batch command execution, easily used from the command line. 
@@ -25,14 +25,14 @@ A scalable GUI for controlling ThorLabs filter wheels, also offering automatic p
 * Any delays occur in background tasks so that execution of other tasks in Igor isn't disrupted (e.g., data acquisition or notekeeping)
 * Tested with FW102C Filter Wheels. Does not support 'fast change' filter wheel FW103H (e.g., FW103H)
 
-### Timestamped, auto-saving notebooks
+### Timestamped, auto-saving notebooks (`notebook.ipf`)
 Functionalities for using Igor notebooks to take notes during experiments. *This procedure file requires `igorUtilities.ipf`, found in this repo. Use with `thorSlowWheels.ipf` for automatically adding filter wheel information to your notebook.*
 * Create a notebook with `notes_newNB(<your notebook name>)`, which immediately prompts you to set a location for notebook backups. Use the options under the Notebook menu for further control
 * Type and format the notebook as you like (it's formattable but still readable in plain text) -- time stamps are entered for every new paragraph (enter key)
 * Track Molecular Devices ABF file recordings as they occur and automatically note the current file.
 * Track ThorLabs filter wheel positions and automatically note them as well.
 
-### Neuron tracer
+### Neuron tracer (`tracing.ipf`)
 Trace image stacks in Igor image displays. **This procedure file requires `igorUtilities.ipf`, found in this repo.**
 * Provides detailed statistics and morphological parameters (diameter as a function of length, mean diameter within specified segments)
 * Automatic panning along the traced cell to inspect results
