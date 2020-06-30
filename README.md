@@ -19,6 +19,8 @@ All procedures are contained in a WaveMetrics Igor Pro procedure (.ipf) files. T
 * disp_killWinsWithWave(...): automatically kill windows that contain specific waves, with user checking optional
 
 ### ThorLabs filter wheel control (`thorSlowWheels.ipf`)
+![](filterWheelGuiImage.png)
+
 A scalable GUI for controlling ThorLabs filter wheels, also offering automatic position history logging and notebook integration (with the notebook code below). *This procedure file requires `igorUtilities.ipf` and `notebook.ipf`, found in this repo, and VDT2.xop (see below)*
 * Uses the VDT2.xop XOP that ships with Igor Pro. To make that useable, move or copy it and its help file VDT2.xop from the 'More Extensions\Data Acquisition' folder to the Igor Extensions folder (all within 'Program Files\WaveMetrics\Igor Pro 8 Folder\' on Windows), and then restart Igor.
 * Scale to an unlimited number of filter wheels and configurations
