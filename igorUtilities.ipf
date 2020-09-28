@@ -1539,3 +1539,19 @@ function text_str2num(str)
 	
 	return str2num(str)
 end
+
+function/S getDateStr(igorDate)
+	String igorDate	//pass "" for current (computer) date, pass another date otherwise. Format must be as returned by date()
+	
+	if (strlen(igorDate) < 1)
+		igorDate = date()
+	endif
+	
+	String monthsList = "jan;feb;mar;apr;may;jun;jul;aug;sep;oct;nov;dec;"
+	make/o/t/n=(12) monthsStrs = selectstring(p < 9, "", "0") + num2str(p+1)
+	String expr="([[:alpha:]]+), ([[:alpha:]]+) ([[:digit:]]+), ([[:digit:]]+)"
+	String dayOfWeek, monthName, dayNumStr, yearStr
+	SplitString/E=(expr) igorDate, dayOfWeek, monthName, dayNumStr, yearStr
+	return yearStr[2,inf] + monthsStrs[whichlistitem(monthName,monthsList,";",0,0)] + dayNumStr
+	
+end
