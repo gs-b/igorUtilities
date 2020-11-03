@@ -8,7 +8,8 @@
 //and substituting any %i with the current list index, then executing executeStr.
 //Optionally instead iterate over certain waves (over a single row or single column of a 2D wave)
 //Optionally pass alternative escape strings instead of %s and %i (altItemEscapeStr and altIndexEscapeStr, respectively)
-function list_operation_g(executeStr,strList,[start,num,delim,iterateWaveColInstead,iterateWaveRowInstead,replaceStr,skipBlanks,checkVarName,extraLists,altItemEscapeStr,altIndexEscapeStr,toClip,memChecks])
+//optionally pass the name of a global string that is used in loop (e.g., "returnStr+=%s_transformed;"), pass returnStr=returnStr. the global is created if it does not exist
+function/S list_operation_g(executeStr,strList,[start,num,delim,iterateWaveColInstead,iterateWaveRowInstead,replaceStr,skipBlanks,checkVarName,extraLists,altItemEscapeStr,altIndexEscapeStr,toClip,memChecks,returnStr,clearReturnStrAtStartOrEnd])
 	String executeStr		//macro to execute e.g, display/k=1 %s to plot waves named in strList
 	String strList		//semicolon-delimited list to iterate over (e.g., names of waves), or "" to just use %i, or the name of a wave to use either iterateWaveColInstead,iterateWaveRowInstead
 	Variable start,num		//for specifying a subrange of strList
@@ -25,6 +26,8 @@ function list_operation_g(executeStr,strList,[start,num,delim,iterateWaveColInst
 	String checkVarName		//optionally pass the name of a num variable that might get changed to false during your executeStr execution. If passed, the function will break if ever the num is false after an execution
 	int toClip				//send commands to clip
 	int memChecks			//check for memory below 0.1 GB and abort if below
+	String returnStr	//optionally pass the name of a global string that is used in loop (e.g., "returnStr+=%s_transformed;"), fr which you would pass returnStr=returnStr. the global is created if it does not exist. defaults to returnStr if passing ""
+	int clearReturnStrAtStartOrEnd  //pass -1 to clear at start, 1 to clear at end, or zero for neither
 	
 	//handle some optional parameters
 	int doToClip = !ParamIsDefault(toClip) && toClip
@@ -36,6 +39,19 @@ function list_operation_g(executeStr,strList,[start,num,delim,iterateWaveColInst
 	endif
 	if (!ParamIsDefault(altIndexEscapeStr) && (strlen(altIndexEscapeStr) > 0) )
 		indexEscapeStr = altIndexEscapeStr
+	endif
+	if (!ParamIsDefault(returnStr))
+		if (strlen(returnStr)<1)
+			returnStr="returnStr"
+		endif
+		SVAR/z returnStrLocal = $returnStr
+		if (!svar_exists(returnStrLocal))
+			string/g $returnStr; SVAR returnStrLocal = $returnStr
+		endif
+		
+		if (clearReturnStrAtStartOrEnd < 0)
+			returnStrLocal=""
+		endif
 	endif
 								
 	Variable doCheckVar = !ParamIsDefault(checkVarName) && (strlen(checkVarName) > 0)
@@ -145,9 +161,17 @@ function list_operation_g(executeStr,strList,[start,num,delim,iterateWaveColInst
 		endif
 		
 	endfor
+	
+	if (!ParamIsDefault(returnStr))
+		String localTemp = returnStrLocal
+		if (clearReturnStrAtStartOrEnd > 0) 
+			returnStrLocal=""
+		endif
+		return localTemp
+	else
+		return ""
+	endif
 end
-
-
  
 
 //assign multiple dimension labels from a String list
