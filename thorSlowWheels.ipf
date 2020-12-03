@@ -118,10 +118,8 @@ function tsw_startPanels()		//run to instantiate panel -- fill in appropriate de
 	Button forceLogBtn win=$panelName,title="\JLLog",proc=tsw_btnHandling,size={btnWidth,20},pos={0,3*btnHeight},fsize=btnFSize,help={"Record wheel states in backup file log"}
 	Checkbox printLoggingCB win=$panelName,value=defaultPrintLogging,title="\rPr",pos={0,3.8*btnHeight+loggingCBGap},fsize=cbFontSize,appearance={os9},size={cbWidth,20},help={"Check to print logging to history (Logging to backup file in any case)"}
 	Button printToNotebook win=$panelName,title="\JLNB",proc=tsw_btnHandling,size={btnWidth,20},pos={0,4.8*btnHeight},fsize=btnFSize,help={"Send wheel states to an Igor NoteBook"}
-	Checkbox suppressLogDisplayCB win=$panelName,title="\rSL",pos={0,6.2*btnHeight+loggingCBGap},fsize=cbFontSize,appearance={os9},size={cbWidth,20},help={"Suppress automatic changes of pStar values based on actual bench positions\rAllows stationary pStar values based on user selections"}
-	Button connectAllPorts win=$panelName,title="\JLInit",proc=tsw_btnHandling,size={btnWidth,20},pos={0,8*btnHeight},fsize=btnFSize,help={"Forces reconnection to all COM ports (almost always unnecessary)"}
-	Button closeAllPorts win=$panelName,title="\JLEnd",proc=tsw_btnHandling,size={btnWidth,20},pos={0,9*btnHeight},fsize=btnFSize,help={"Frees (disconnects) all COM ports so they are available to other interfaces/programs"} 
-	
+	Button connectAllPorts win=$panelName,title="\JLInit",proc=tsw_btnHandling,size={btnWidth,20},pos={0,6*btnHeight},fsize=btnFSize,help={"Forces reconnection to all COM ports (almost always unnecessary)"}
+	Button closeAllPorts win=$panelName,title="\JLEnd",proc=tsw_btnHandling,size={btnWidth,20},pos={0,7*btnHeight},fsize=btnFSize,help={"Frees (disconnects) all COM ports so they are available to other interfaces/programs"} 
 	
 	setwindow $panelName userdata(wheelsList) = wheelsList		//store wheel list in panel	
 	setwindow $panelName userdata(btnWidth)=num2str(btnWidth)
@@ -931,7 +929,7 @@ function tsw_autoChecks(s)
 	String panelName = StringByKey(comStr, comPanels)
 	if (wintype(panelName) != 7)		//window no longer exists (probably at all, but at least as a panel), so kill this background
 		CtrlNamedBackground $s.name,kill
-		Print "tsw_autoChecks(): tsw panel",s.name," does not exist. Auto checks ending"
+		Print "tsw_autoChecks(): tsw panel",panelName," does not exist. Auto checks ending"
 		return 1		//return 1 ends
 	endif
 	
